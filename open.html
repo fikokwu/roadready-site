@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>RoadReady: Open the app</title>
+<meta name="referrer" content="no-referrer">
+<title>RoadReady: Your account</title>
 <meta name="theme-color" content="#161b2e">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -13,17 +14,27 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@600;700&display=swap">
 <link rel="stylesheet" href="style.css">
 <style>
+  [hidden] { display: none !important; }
   .open { padding-top: 56px; padding-bottom: 72px; display: grid; gap: 16px; max-width: 640px; }
-  .open img { width: 72px; height: 72px; border-radius: 16px; }
+  .open > img { width: 72px; height: 72px; border-radius: 16px; }
   .open h1 { font-size: clamp(30px, 5vw, 40px); line-height: 1.15; margin: 8px 0 0; }
   .open p { margin: 0; color: var(--muted); font-size: 18px; }
   .button {
-    justify-self: start; margin-top: 8px;
+    justify-self: start; margin-top: 8px; border: 0; cursor: pointer;
     background: var(--amber); color: var(--on-amber);
-    font-weight: 600; text-decoration: none;
-    padding: 14px 22px; border-radius: 12px;
+    font: 600 17px/1 "Inter", system-ui, sans-serif; text-decoration: none;
+    padding: 15px 24px; border-radius: 12px;
   }
-  .button:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+  .button[disabled] { opacity: .6; cursor: default; }
+  .button:focus-visible, input:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+  form { display: grid; gap: 14px; margin-top: 8px; }
+  label { display: grid; gap: 6px; font-weight: 600; font-size: 15px; }
+  input {
+    font: 17px "Inter", system-ui, sans-serif; color: var(--text); background: var(--surface);
+    border: 1px solid var(--border); border-radius: 10px; padding: 13px 14px; width: 100%;
+  }
+  .error { color: #b8432b !important; font-size: 16px !important; }
+  @media (prefers-color-scheme: dark) { .error { color: #f0714b !important; } }
   .small { font-size: 15px !important; }
 </style>
 </head>
@@ -40,12 +51,24 @@
 </header>
 <div class="road" role="presentation"></div>
 
-<main class="wrap open">
+<main class="wrap open" aria-live="polite">
   <img src="icon.png" alt="RoadReady app icon">
-  <h1 id="title">Open RoadReady</h1>
-  <p id="body">Tap the button to carry on in the app.</p>
-  <a class="button" id="open" href="com.endlesstech.roadready://login-callback">Open RoadReady</a>
-  <p class="small" id="help">Need a hand? Email <a href="mailto:support@beaconsec.ca">support@beaconsec.ca</a>.</p>
+  <h1 id="title">One moment…</h1>
+  <p id="body">Checking your link.</p>
+
+  <form id="reset" hidden>
+    <label for="password">New password
+      <input id="password" type="password" autocomplete="new-password" minlength="8" required>
+    </label>
+    <label for="confirm">Type it again
+      <input id="confirm" type="password" autocomplete="new-password" minlength="8" required>
+    </label>
+    <p class="error" id="formError" hidden></p>
+    <button class="button" id="save" type="submit">Save new password</button>
+  </form>
+
+  <a class="button" id="open" href="com.endlesstech.roadready://login-callback" hidden>Open RoadReady</a>
+  <p class="small">Need a hand? Email <a href="mailto:support@beaconsec.ca">support@beaconsec.ca</a>.</p>
 </main>
 
 <footer class="site-footer">
@@ -60,67 +83,175 @@
 </footer>
 
 <script>
-// Links in RoadReady's account emails land here. Supabase has already done its
-// part (an email confirmation is saved before this page loads) and passes a
-// one-time code, which only the app can use. Hand it on, and say plainly what
-// happened, because on a computer the app can't open.
+// Links in RoadReady's account emails land here (supabase/email-templates).
+// Each carries a one-time token_hash; this page redeems it with Supabase
+// directly, so a link works on any phone or computer, not only on the device
+// that asked for it. Nothing is stored: the session it gets lives only in
+// this tab, and is signed out after a password change.
 (function () {
+  var API = 'https://gvedxafpmgoitdpoagkn.supabase.co/auth/v1';
+  var KEY = 'sb_publishable_7RZDHCUnCVylH5f-_lyKug_dX7pp0JI';
+  var APP = 'com.endlesstech.roadready://login-callback';
   var q = new URLSearchParams(location.search);
   var h = new URLSearchParams(location.hash.replace(/^#/, ''));
-  var kind = q.get('for');
-  var error = q.get('error') || h.get('error');
-  var errorCode = q.get('error_code') || h.get('error_code') || '';
   var phone = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  var app = 'com.endlesstech.roadready://login-callback' + location.search;
 
-  var title = document.getElementById('title');
-  var body = document.getElementById('body');
-  var button = document.getElementById('open');
-  button.href = app;
+  var $ = function (id) { return document.getElementById(id); };
+  function say(title, body) { $('title').textContent = title; $('body').textContent = body; }
+  function showApp(label) { var b = $('open'); b.textContent = label || 'Open RoadReady'; b.hidden = false; }
 
-  function say(t, b, showButton, label) {
-    title.textContent = t;
-    body.textContent = b;
-    button.hidden = !showButton;
-    if (label) button.textContent = label;
+  function expired(what) {
+    say('This link has expired',
+      'Links in our emails work once and only for a while. ' + what);
+  }
+  function failed() {
+    say('That link didn’t work',
+      'Open RoadReady and try again from the sign-in screen. If it keeps happening, email us.');
   }
 
-  if (error) {
-    if (errorCode === 'otp_expired') {
-      say('This link has expired',
-        'Links in our emails work once and only for a short time. If you already confirmed your email, just sign in. ' +
-        'Otherwise, open RoadReady and ask for a new email from the sign-in screen.', false);
-    } else {
-      say('That link didn’t work',
-        'Open RoadReady and try again from the sign-in screen. If it keeps happening, email us.', false);
-    }
+  // Takes the token off the address bar, so it isn't kept in history or
+  // shared by accident once it's been used.
+  function forgetToken() {
+    try { history.replaceState(null, '', location.pathname); } catch (e) {}
+  }
+
+  function verify(type, tokenHash) {
+    return fetch(API + '/verify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', apikey: KEY },
+      body: JSON.stringify({ type: type, token_hash: tokenHash })
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (j) {
+        if (!r.ok) {
+          var e = new Error(j.msg || j.error_description || 'verify failed');
+          e.code = j.error_code || j.code || '';
+          throw e;
+        }
+        return j;
+      });
+    });
+  }
+
+  function signOut(token) {
+    return fetch(API + '/logout?scope=local', {
+      method: 'POST',
+      headers: { apikey: KEY, Authorization: 'Bearer ' + token }
+    }).catch(function () {});
+  }
+
+  var tokenHash = q.get('token_hash');
+  var type = q.get('type');
+
+  // ---- Links from the current templates ----
+  if (tokenHash && (type === 'email' || type === 'signup')) {
+    verify('email', tokenHash).then(function (s) {
+      forgetToken();
+      if (s.access_token) signOut(s.access_token);
+      say('Your email is confirmed',
+        phone ? 'Open RoadReady and sign in with your email and password. Your progress will back up from now on.'
+              : 'You’re all set. Open RoadReady on your phone and sign in with your email and password.');
+      if (phone) showApp();
+    }).catch(function (e) {
+      if (/expired|invalid/i.test(e.code + ' ' + e.message)) {
+        expired('If you already confirmed your email, just sign in. Otherwise, sign up again in RoadReady to get a new email.');
+      } else failed();
+    });
     return;
   }
 
-  if (kind === 'confirm') {
-    if (phone) {
-      say('Your email is confirmed',
-        'Open RoadReady to finish signing in. Your progress will back up from now on.', true, 'Open RoadReady');
-    } else {
-      say('Your email is confirmed',
-        'You’re all set. Open RoadReady on your phone and sign in with your email and password.', false);
-    }
-  } else if (kind === 'reset') {
-    if (phone) {
-      say('Choose a new password',
-        'Open RoadReady to set your new password.', true, 'Open RoadReady');
-    } else {
-      say('Open this link on your phone',
-        'Password resets finish in the app. Open the email on the phone where you asked for the reset, and tap the link there.', false);
-    }
-  } else if (!phone) {
-    say('Open RoadReady on your phone', 'RoadReady is a phone app for iPhone and Android.', false);
+  if (tokenHash && type === 'recovery') {
+    say('Choose a new password', 'At least 8 characters.');
+    var form = $('reset');
+    form.hidden = false;
+    form.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var pw = $('password').value, again = $('confirm').value, err = $('formError');
+      err.hidden = true;
+      if (pw !== again) { err.textContent = 'Those two passwords don’t match.'; err.hidden = false; return; }
+      $('save').disabled = true;
+      verify('recovery', tokenHash).then(function (s) {
+        forgetToken();
+        return fetch(API + '/user', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', apikey: KEY, Authorization: 'Bearer ' + s.access_token },
+          body: JSON.stringify({ password: pw })
+        }).then(function (r) {
+          return r.json().catch(function () { return {}; }).then(function (j) {
+            signOut(s.access_token);
+            if (!r.ok) {
+              var e = new Error(j.msg || 'update failed'); e.code = j.error_code || ''; e.fromUpdate = true; throw e;
+            }
+          });
+        });
+      }).then(function () {
+        form.hidden = true;
+        say('Password changed',
+          'Open RoadReady and sign in with your new password.');
+        if (phone) showApp();
+      }).catch(function (e) {
+        $('save').disabled = false;
+        if (e.fromUpdate) {
+          // The link is used up once verified, so a retry needs a new email.
+          form.hidden = true;
+          say('Your password wasn’t changed',
+            (e.code === 'weak_password' ? 'That password is too easy to guess. '
+              : e.code === 'same_password' ? 'That’s the password you already have. ' : '') +
+            'Ask for a new reset email from the sign-in screen in RoadReady and try again.');
+        } else if (/expired|invalid/i.test(e.code + ' ' + e.message)) {
+          form.hidden = true;
+          expired('Ask for a new reset email from the sign-in screen in RoadReady.');
+        } else {
+          err.textContent = 'Something went wrong. Check your connection and try again.';
+          err.hidden = false;
+        }
+      });
+    });
+    return;
   }
 
-  // On a phone, try the app straight away; the button stays for when the
-  // browser asks first or blocks it.
-  if (phone && !button.hidden && q.get('code')) {
-    setTimeout(function () { location.href = app; }, 400);
+  if (tokenHash && type === 'email_change') {
+    verify('email_change', tokenHash).then(function (s) {
+      forgetToken();
+      if (s.access_token) {
+        signOut(s.access_token);
+        say('Your new email is confirmed', 'Use it the next time you sign in to RoadReady.');
+      } else {
+        // Supabase asks both the old and the new address to confirm.
+        say('One more step', 'We also sent a link to your other email address. Tap that one too to finish the change.');
+      }
+    }).catch(function (e) {
+      if (/expired|invalid/i.test(e.code + ' ' + e.message)) {
+        expired('Change your email again in RoadReady to get a new link.');
+      } else failed();
+    });
+    return;
+  }
+
+  // ---- Links from older emails, which went through Supabase first ----
+  var error = q.get('error') || h.get('error');
+  var errorCode = q.get('error_code') || h.get('error_code') || '';
+  var kind = q.get('for');
+  if (error) {
+    if (errorCode === 'otp_expired') {
+      expired('If you already confirmed your email, just sign in. Otherwise, open RoadReady and ask for a new email.');
+    } else failed();
+    return;
+  }
+  var app = APP + location.search;
+  $('open').href = app;
+  if (kind === 'confirm') {
+    say('Your email is confirmed', phone ? 'Open RoadReady to finish signing in.'
+      : 'You’re all set. Open RoadReady on your phone and sign in with your email and password.');
+  } else if (kind === 'reset') {
+    say(phone ? 'Choose a new password' : 'Open this link on your phone',
+      phone ? 'Open RoadReady to set your new password.'
+            : 'This older link finishes in the app. Open the email on the phone where you asked for the reset.');
+  } else {
+    say('Open RoadReady', 'RoadReady is a study app for iPhone and Android.');
+  }
+  if (phone && kind) {
+    showApp();
+    if (q.get('code')) setTimeout(function () { location.href = app; }, 400);
   }
 })();
 </script>
