@@ -60,7 +60,7 @@
     <label for="password">New password
       <input id="password" type="password" autocomplete="new-password" minlength="8" required>
     </label>
-    <label for="confirm">Type it again
+    <label for="confirm">Confirm password
       <input id="confirm" type="password" autocomplete="new-password" minlength="8" required>
     </label>
     <p class="error" id="formError" hidden></p>
@@ -163,6 +163,11 @@
     say('Choose a new password', 'At least 8 characters.');
     var form = $('reset');
     form.hidden = false;
+    // Typed, not pasted: the point of this box is to catch a typo in the
+    // first one. Password managers fill it by autofill, which still works.
+    ['paste', 'drop'].forEach(function (ev) {
+      $('confirm').addEventListener(ev, function (e) { e.preventDefault(); });
+    });
     form.addEventListener('submit', function (ev) {
       ev.preventDefault();
       var pw = $('password').value, again = $('confirm').value, err = $('formError');
