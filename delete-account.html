@@ -3,48 +3,85 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Delete your RoadReady account</title>
+<title>RoadReady: Delete your account</title>
+<meta name="description" content="How to delete your RoadReady account and its data.">
+<meta name="theme-color" content="#161b2e">
 <link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@600;700&display=swap">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<nav>
-  <a class="brand" href="./">RoadReady</a>
-  <a href="privacy.html">Privacy</a>
-  <a href="terms.html">Terms</a>
-  <a href="delete-account.html">Delete account</a>
-</nav>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./"><img src="icon.png" alt="">RoadReady</a>
+    <nav aria-label="Main">
+      <a href="./#support">Support</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="delete-account.html" aria-current="page">Delete account</a>
+    </nav>
+  </div>
+</header>
+<div class="road" role="presentation"></div>
 
-<h1>Delete your RoadReady account</h1>
-<p>RoadReady is published by Endless Technologies. You can delete your account and its data at any time.</p>
+<main>
+<div class="page-head">
+  <div class="wrap">
+    <h1>Delete your account</h1>
+    <p class="meta">You can delete your RoadReady account, and everything in it, at any time.</p>
+  </div>
+</div>
 
-<h2>In the app</h2>
-<ol>
-  <li>Open RoadReady and sign in.</li>
-  <li>Go to <strong>Profile</strong>.</li>
-  <li>Tap <strong>Delete account</strong> and confirm.</li>
-</ol>
-<p>Deletion happens immediately.</p>
+<div class="wrap doc">
+  <nav class="toc" aria-label="Contents">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#app">In the app</a></li>
+      <li><a href="#email">Without the app</a></li>
+      <li><a href="#deleted">What gets deleted</a></li>
+      <li><a href="#kept">What's kept</a></li>
+    </ol>
+  </nav>
 
-<h2>Without the app</h2>
-<p>Email <a href="mailto:support@beaconsec.ca?subject=Delete%20my%20RoadReady%20account">support@beaconsec.ca</a>
-from the address your account uses, with the subject “Delete my RoadReady account”. We will delete it
-within 30 days and confirm by reply.</p>
+  <article class="text">
+    <h2 id="app">In the app</h2>
+    <ol class="steps">
+      <li>Open RoadReady and sign in.</li>
+      <li>Go to <strong>Profile</strong>.</li>
+      <li>Tap <strong>Delete account</strong> and confirm.</li>
+    </ol>
+    <p>Your account is deleted right away.</p>
 
-<h2>What is deleted</h2>
-<ul>
-  <li>Your account: email address, display name and sign-in details.</li>
-  <li>All study progress stored with your account: XP, streaks, study days, lessons read, per-question
-      answer history and mock exam results.</li>
-</ul>
+    <h2 id="email">Without the app</h2>
+    <p>Email <a href="mailto:support@beaconsec.ca?subject=Delete%20my%20RoadReady%20account">support@beaconsec.ca</a>
+    from the email address on your account, with the subject "Delete my RoadReady account". We'll delete it
+    within 30 days and email you when it's done.</p>
 
-<h2>What is kept</h2>
-<p>Nothing linked to you. Copies in encrypted backups expire within 30 days. Progress saved on your own
-phone stays there until you reset it in the app or uninstall the app.</p>
+    <h2 id="deleted">What gets deleted</h2>
+    <ul>
+      <li>Your account: your email address, name and sign-in details.</li>
+      <li>All the progress saved with it: XP, streaks, study days, lessons, answers and mock exam results.</li>
+    </ul>
 
-<footer>
-  <p>RoadReady is an independent study aid published by Endless Technologies. It is not affiliated with any
-  government or licensing agency.</p>
+    <h2 id="kept">What's kept</h2>
+    <p>Nothing linked to you. Backup copies are gone within 30 days. Progress saved on your own phone stays
+    there until you reset it in the app or delete the app.</p>
+  </article>
+</div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>RoadReady is an independent study aid made by Endless Technologies. It is not connected to any government or licensing agency.</p>
+    <nav aria-label="Footer">
+      <a href="./">Home</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </nav>
+  </div>
 </footer>
 </body>
 </html>

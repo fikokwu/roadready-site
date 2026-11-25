@@ -4,142 +4,169 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RoadReady: Privacy Policy</title>
+<meta name="description" content="What RoadReady collects, why, and the choices you have.">
+<meta name="theme-color" content="#161b2e">
 <link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@600;700&display=swap">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<nav>
-  <a class="brand" href="./">RoadReady</a>
-  <a href="privacy.html">Privacy</a>
-  <a href="terms.html">Terms</a>
-  <a href="delete-account.html">Delete account</a>
-</nav>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./"><img src="icon.png" alt="">RoadReady</a>
+    <nav aria-label="Main">
+      <a href="./#support">Support</a>
+      <a href="privacy.html" aria-current="page">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="delete-account.html">Delete account</a>
+    </nav>
+  </div>
+</header>
+<div class="road" role="presentation"></div>
 
-<h1>Privacy Policy</h1>
-<p class="meta">Last updated: November 24, 2026<br>
-Applies to: RoadReady for iOS and Android<br>
-Published by: Endless Technologies<br>
-Contact: <a href="mailto:support@beaconsec.ca">support@beaconsec.ca</a></p>
-
-<div class="summary">
-<p><strong>The short version.</strong> RoadReady works offline and you never need an account to study. Without
-one, your progress stays <strong>on your device</strong>. If you create an account, we store your sign-in
-details and your study progress on our servers so it syncs between your devices and survives a lost phone.
-You can delete your account, and everything attached to it, from inside the app at any time. We do not show
-ads, we do not use analytics, and we do not sell or share your data with anyone.</p>
+<main>
+<div class="page-head">
+  <div class="wrap">
+    <h1>Privacy Policy</h1>
+    <p class="meta">Last updated November 24, 2026 · For RoadReady on iPhone and Android · Made by Endless Technologies</p>
+  </div>
 </div>
 
-<h2>What we collect</h2>
+<div class="wrap doc">
+  <nav class="toc" aria-label="Contents">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#no-account">Without an account</a></li>
+      <li><a href="#province">Your province</a></li>
+      <li><a href="#account">With an account</a></li>
+      <li><a href="#never">What we never collect</a></li>
+      <li><a href="#others">Who helps us</a></li>
+      <li><a href="#keep">How long we keep it</a></li>
+      <li><a href="#choices">Your choices</a></li>
+      <li><a href="#children">Children</a></li>
+      <li><a href="#changes">Changes</a></li>
+      <li><a href="#contact">Contact us</a></li>
+    </ol>
+  </nav>
 
-<h3>If you use RoadReady without an account (the default)</h3>
-<p><strong>Nothing leaves your device.</strong> We collect no personal information at all. Your progress (
-experience points, streaks, which lessons you have opened or completed, your per-question results, your
-best exam scores, your chosen province, your daily goal, and your test date if you set one) is stored
-only in your device's local storage. We cannot see it. If you delete the app, it is gone.</p>
+  <article class="text">
+    <div class="summary">
+      <h2>The short version</h2>
+      <ul>
+        <li>You can study without an account. Then nothing leaves your phone.</li>
+        <li>An account is optional. It backs up your progress and syncs it between your devices.</li>
+        <li>No ads, no analytics, no tracking. We never sell or share your data.</li>
+        <li>You can delete your account at any time, right in the app.</li>
+      </ul>
+    </div>
 
-<h3>Your province</h3>
-<p>RoadReady needs to know which province's rules to teach you. You can pick your province from a list, or
-let the app detect it.</p>
-<p>If you choose detection, the app asks your device for a <strong>low-accuracy, city-level</strong>
-location, converts it to a province, and keeps <strong>only the two-letter province code</strong> (for
-example, “ON”). The coordinates are used in memory for that single lookup and are <strong>never stored,
-never transmitted to us, and never logged</strong>. We never learn your address, your city, or where you
-are.</p>
-<p>The conversion from coordinates to a province name is performed by your device's own operating system
-geocoding service (Apple or Google, depending on your phone). That lookup is governed by your device
-maker's privacy policy, not ours.</p>
-<p>You can decline the location permission. The app works identically. You just pick your province from a
-list instead. You can change or revoke the permission at any time in your device settings.</p>
+    <h2 id="no-account">Without an account</h2>
+    <p>Your progress stays on your phone. That includes your XP, streaks, lessons, quiz and exam results,
+    your province, your daily goal and your test date. We can't see any of it. If you delete the app,
+    it's gone.</p>
 
-<h3>If you create an account (optional)</h3>
-<p>Accounts are optional. They exist so your progress syncs between your devices and is not lost if you
-change or lose your phone.</p>
-<p>If you create one, we collect:</p>
-<div class="table-wrap">
-<table>
-  <thead><tr><th>Data</th><th>Why</th></tr></thead>
-  <tbody>
-    <tr><td>Email address</td><td>To identify your account, sign you in, and send password resets</td></tr>
-    <tr><td>Password</td><td>Only if you sign up with email. Stored only as a cryptographic hash, never as readable text</td></tr>
-    <tr><td>Display name</td><td>Shown in the app so it can greet you; you choose it, or it comes from Apple or Google</td></tr>
-  </tbody>
-</table>
+    <h2 id="province">Your province</h2>
+    <p>RoadReady needs your province to teach you the right rules. You can pick it from a list, or let the
+    app find it.</p>
+    <p>If you let the app find it, your phone looks up your rough location (city level) and turns it into a
+    province. The app keeps only the two-letter code, like "ON". Your location is never saved, never sent
+    to us and never logged. The lookup is done by your phone's own service from Apple or Google.</p>
+    <p>You can say no to location access. You'll just pick your province from the list instead, and you can
+    change your mind any time in your phone's settings.</p>
+
+    <h2 id="account">With an account</h2>
+    <p>Accounts are optional. They back up your progress and keep it the same on all your devices, so it
+    isn't lost if you change or lose your phone. If you make one, we store:</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>What</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>Email address</td><td>To sign you in and send account emails, like a password reset</td></tr>
+        <tr><td>Password</td><td>Only if you sign up with email. It's stored scrambled (hashed), so no one can read it</td></tr>
+        <tr><td>Name</td><td>So the app can greet you. You choose it, or it comes from Apple or Google</td></tr>
+        <tr><td>Study progress</td><td>So it's backed up and synced. It's only about your studying: no messages, contacts or location</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <h3>Signing in with Apple or Google</h3>
+    <p>If you sign in with Apple or Google, that company tells us your name, your email address and an
+    account ID. Google may also send a link to your profile picture, which we don't use. If you choose
+    Apple's "Hide My Email", we only get a private address that forwards to you. We never see your Apple or
+    Google password.</p>
+
+    <h2 id="never">What we never collect</h2>
+    <ul>
+      <li>Ads or advertising IDs</li>
+      <li>Analytics or tracking</li>
+      <li>Your contacts, photos, camera, microphone, calendar or health data</li>
+      <li>Your exact location</li>
+      <li>Payment details. The app is free. If we add paid features later, Apple or Google take the payment
+      and we never see your card.</li>
+    </ul>
+
+    <h2 id="others">Who helps us</h2>
+    <ul>
+      <li><strong>Supabase</strong> stores accounts and progress for us, on servers in Canada (Amazon Web
+      Services, Canada Central). They can't use your data for anything else.</li>
+      <li><strong>Resend</strong> sends account emails: the one that confirms your email address and the
+      password reset link. It handles your email address to do this, and may do so outside Canada. We don't
+      send marketing emails.</li>
+      <li><strong>Apple and Google</strong> run the app stores, your phone's location lookup, and Sign in
+      with Apple and Google if you use them. Their own privacy policies apply.</li>
+    </ul>
+    <p>That's everyone. We don't sell, rent or trade your data, and we don't share it for ads.</p>
+
+    <h2 id="keep">How long we keep it</h2>
+    <ul>
+      <li><strong>On your phone:</strong> until you reset your progress in the app or delete the app.</li>
+      <li><strong>With an account:</strong> for as long as you have the account. When you delete it, your
+      account and progress are deleted right away. Backup copies are gone within 30 days.</li>
+    </ul>
+
+    <h2 id="choices">Your choices</h2>
+    <ul>
+      <li><strong>Reset your progress</strong> from Profile in the app. If you're signed in, this clears it on
+      our servers too.</li>
+      <li><strong>Delete your account</strong> from Profile, then Delete account. No app?
+      <a href="delete-account.html">Here's how to delete it</a>.</li>
+      <li><strong>See, fix or get a copy of your data</strong> by emailing us. We'll reply within 30 days.</li>
+      <li><strong>Turn off location access</strong> any time in your phone's settings.</li>
+    </ul>
+    <p>If you're not happy with how we handled a privacy request, you can contact the
+    <a href="https://www.priv.gc.ca/">Office of the Privacy Commissioner of Canada</a>.</p>
+
+    <h2 id="children">Children</h2>
+    <p>RoadReady is for people studying for their driver's knowledge test: those of age to begin the driver
+    licensing program in their province. It isn't meant for children under 13, and we don't knowingly
+    collect their information. Anyone can use the app without an account and share nothing at all. If you
+    think a child under 13 has made an account, contact us and we'll delete it.</p>
+
+    <h2 id="changes">Changes</h2>
+    <p>If we change this policy, we'll update the date at the top. If a change affects you in a big way,
+    we'll tell you in the app before it happens.</p>
+
+    <h2 id="contact">Contact us</h2>
+    <address>
+      <a href="mailto:support@beaconsec.ca">support@beaconsec.ca</a><br>
+      Endless Technologies<br>
+      394 Frankwood Ave, Thunder Bay, ON  P7B 4R1
+    </address>
+  </article>
 </div>
-<p>You can also sign in with <strong>Apple</strong> or <strong>Google</strong> instead of a password. If you
-do, that company confirms who you are and shares your name, your email address and an account ID with us;
-Google may also share a link to your profile picture, which we do not use. With Sign in with Apple you can
-choose “Hide My Email”, and we then receive only a private relay address that forwards to you. We never see
-your Apple or Google password.</p>
+</main>
 
-<h3>Progress sync</h3>
-<p>When you are signed in, the app uploads the same study progress described above and keeps it in step
-across your devices, so it can be restored if you change or lose your phone. That data is linked to your
-account. It is about your studying (scores, streaks, lesson and question records) and contains no free
-text, no contacts, and no location.</p>
-
-<h3>What we never collect</h3>
-<ul>
-  <li>No advertising identifiers, and no ads of any kind</li>
-  <li>No analytics or behavioural tracking SDKs</li>
-  <li>No contacts, photos, microphone, camera, calendar, or health data</li>
-  <li>No precise or stored location</li>
-  <li>No payment details: version 1.0 is free, and if paid features arrive later, Apple and Google
-      process the payment and we never see your card</li>
-</ul>
-
-<h2>Who else is involved</h2>
-<p><strong>Supabase</strong> provides our authentication and database hosting. They act as our data
-processor: they store account and progress data on our behalf and may not use it for their own purposes.
-Our database is hosted in Canada (Amazon Web Services, Canada Central region).</p>
-<p><strong>Resend</strong> delivers the emails an account needs: the message that confirms your
-email address and the link to reset your password. To do that it processes your email address and the
-content of those messages, and it may do so outside Canada. We do not send marketing email.</p>
-<p><strong>Apple and Google</strong> operate the app stores, the device geocoding
-service, and Sign in with Apple and Sign in with Google if you choose to use them. Their handling of your data is governed by their own policies.</p>
-<p>We use no other third parties. We do not sell, rent, or trade your information, and we do not share it
-for advertising.</p>
-
-<h2>How long we keep things</h2>
-<p>Local progress stays on your device until you reset it in the app or delete the app.</p>
-<p>Account data is kept while your account exists. If you delete your account in the app, your account
-record and all progress associated with it are deleted immediately. Copies in encrypted backups expire
-within 30 days.</p>
-
-<h2>Your choices and rights</h2>
-<ul>
-  <li><strong>Reset your progress.</strong> The app's profile screen clears your progress on the device
-      and, if you are signed in, the copy held on our servers.</li>
-  <li><strong>Study without an account.</strong> You never have to create one.</li>
-  <li><strong>Delete your account.</strong> In the app: Profile → Delete account. This permanently deletes
-      your account record and all progress stored with it. If you no longer have the app, see
-      <a href="delete-account.html">how to delete your account</a>.</li>
-  <li><strong>Access, correct, or export your data.</strong> Email us at the address above and we will
-      respond within 30 days, as PIPEDA requires.</li>
-  <li><strong>Withdraw location permission</strong> at any time in device settings.</li>
-</ul>
-<p>If you are in Canada and are not satisfied with our response, you may complain to the Office of the
-Privacy Commissioner of Canada. If you are in Quebec, Law 25 gives you additional rights, including data
-portability.</p>
-
-<h2>Children</h2>
-<p>RoadReady is intended for people studying for a driver's knowledge test, those of age to begin the driver licensing program in their province.
-It is not directed at children under 13 and we do not knowingly collect personal information from them.
-Because the app works fully without an account, a younger user can use it without giving us any
-information at all. If you believe a child under 13 has created an account, contact us and we will delete
-it.</p>
-
-<h2>Changes</h2>
-<p>If we change this policy we will update the date above and, for any change that materially affects you,
-tell you in the app before it takes effect.</p>
-
-<h2>Contact</h2>
-<p><a href="mailto:support@beaconsec.ca">support@beaconsec.ca</a><br>
-Endless Technologies<br>
-394 Frankwood Ave, Thunder Bay, ON  P7B 4R1</p>
-
-<footer>
-  <p>RoadReady is an independent study aid published by Endless Technologies. It is not affiliated with any
-  government or licensing agency.</p>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>RoadReady is an independent study aid made by Endless Technologies. It is not connected to any government or licensing agency.</p>
+    <nav aria-label="Footer">
+      <a href="./">Home</a>
+      <a href="terms.html">Terms</a>
+      <a href="delete-account.html">Delete account</a>
+    </nav>
+  </div>
 </footer>
 </body>
 </html>
