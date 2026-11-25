@@ -100,7 +100,7 @@ img { display: block; }
 /* Sections on the home page */
 .section { padding: 48px 0; }
 .section h2 { font-size: 28px; margin: 0 0 8px; }
-.section > .wrap > p { max-width: 40em; }
+.section > .wrap > p { max-width: 52em; }
 .features { display: grid; gap: 16px; margin: 24px 0 0; padding: 0; list-style: none; }
 @media (min-width: 720px) { .features { grid-template-columns: repeat(3, 1fr); } }
 .features li {
