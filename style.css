@@ -41,6 +41,8 @@ body {
   color: var(--text);
   background: var(--bg);
 }
+p, li { text-wrap: pretty; }
+h1, h2, h3 { text-wrap: balance; }
 h1, h2, h3, .brand { font-family: "Space Grotesk", "Inter", system-ui, sans-serif; letter-spacing: -0.01em; }
 a { color: var(--link); text-underline-offset: 3px; }
 a:hover { text-decoration-thickness: 2px; }
